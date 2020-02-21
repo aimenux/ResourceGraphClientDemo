@@ -35,14 +35,12 @@ namespace App
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var resourceGraphProvider = serviceProvider.GetService<IResourceGraphProvider>();
-
-            var queryRequestBuilder = serviceProvider.GetService<IQueryRequestBuilder>();
-            var queryRequest = queryRequestBuilder.Build();
-
-            var response = resourceGraphProvider.QueryResources(queryRequest);
-
-            Console.WriteLine($"{nameof(response.Data)}:\n {response.Data}\n");
+            using (var resourceGraphProvider = serviceProvider.GetService<IResourceGraphProvider>())
+            {
+                var request = serviceProvider.GetService<IQueryRequestBuilder>().Build();
+                var response = resourceGraphProvider.QueryResources(request);
+                Console.WriteLine($"{nameof(response.Data)}:\n {response.Data}\n");
+            }
 
             Console.WriteLine("Press any key to exit !");
             Console.ReadKey();
