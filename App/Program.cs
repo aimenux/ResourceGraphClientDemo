@@ -28,8 +28,8 @@ namespace App
             services.AddSingleton<IQueryRequestBuilder, QueryRequestBuilder>();
             services.AddSingleton<IResourceGraphProvider>(provider =>
             {
-                var configSettings = provider.GetService<IOptions<Settings>>().Value;
-                var credentials = GetServiceClientCredentials(configSettings);
+                var settings = provider.GetService<IOptions<Settings>>().Value;
+                var credentials = GetServiceClientCredentials(settings);
                 return new ResourceGraphProvider(credentials);
             });
 
